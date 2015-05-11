@@ -1,0 +1,55 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reactive sample</title>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/jquery.signalR-2.2.0.min.js"></script>
+    <script src="~/signalr/hubs"></script>
+    <script src="~/Scripts/knockout-3.3.0.js"></script>
+    <script src="~/Scripts/knockout-es5.js"></script>
+    <script src="~/Scripts/react.js"></script>
+    <script src="~/Scripts/collections.js"></script>
+    <script src="~/Scripts/ReactiveTodo.js"></script>
+</head>
+<body>
+    <style>
+        body {
+            font-family: 'Open Sans', sans-serif;
+        }
+        ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        span.complete {
+            text-decoration: line-through;
+            color: #aaa;
+        }
+    </style>
+    <script type="text/html" id="todo-template">
+        <label>
+            <input type="checkbox" data-bind="checked: complete" />
+            <span data-bind="text: description, css: { complete: complete }"></span>
+        </label>
+    </script>
+
+    <h1>Todos</h1>
+    <form data-bind="submit: addTodo">
+        <input type="text" data-bind="value: description" placeholder="Description" />
+        <button type="submit">Add todo</button>
+    </form>
+    <ul data-bind="foreach: todos">
+        <li data-bind="template: { name: 'todo-template' }"></li>
+    </ul>
+
+    <script>
+        App.setupCollections();
+        var viewModel = new App.ViewModel();
+        ko.track(viewModel);
+        ko.applyBindings(viewModel);
+    </script>
+</body>
+</html>
